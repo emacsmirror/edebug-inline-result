@@ -29,8 +29,14 @@
    ((featurep 'pos-tip)
     (pos-tip-show edebug-previous-result 'popup-face))))
 
+(defun edebug-inline-result-delete-frame ()
+  "Kill edebug result child-frame."
+  (posframe-delete-frame " *edebug-previous-result*"))
+
 ;;;###autoload
 (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
+;;;###autoload
+(advice-add 'top-level :after #'edebug-inline-result-delete-frame)
 
 
 
