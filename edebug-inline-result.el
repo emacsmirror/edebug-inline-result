@@ -32,7 +32,7 @@
 
 (defun edebug-inline-result-delete-frame ()
   "Kill edebug result child-frame."
-  (posframe-delete-frame " *edebug-previous-result*"))
+  (posframe-hide " *edebug-previous-result*"))
 
 ;;;###autoload
 (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
