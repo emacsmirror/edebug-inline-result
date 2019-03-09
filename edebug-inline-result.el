@@ -1,6 +1,6 @@
 ;;; edebug-inline-result.el --- show Edebug result inline.
 
-;;; Time-stamp: <2019-02-25 15:33:16 stardiviner>
+;;; Time-stamp: <2019-03-09 12:28:59 stardiviner>
 
 ;;; Commentary:
 
@@ -30,14 +30,14 @@
    ((featurep 'pos-tip)
     (pos-tip-show edebug-previous-result 'popup-face))))
 
-(defun edebug-inline-result-delete-frame ()
-  "Kill edebug result child-frame."
+(defun edebug-inline-result-hide-frame ()
+  "Hide edebug result child-frame."
   (posframe-hide " *edebug-previous-result*"))
 
 ;;;###autoload
 (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
 ;;;###autoload
-(advice-add 'top-level :after #'edebug-inline-result-delete-frame)
+(advice-add 'top-level :before #'edebug-inline-result-hide-frame)
 
 
 
