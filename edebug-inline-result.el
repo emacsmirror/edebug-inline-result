@@ -52,18 +52,19 @@
     (pos-tip-show edebug-previous-result 'popup-face))))
 
 ;;;###autoload
-(defun edebug-inline-result-hide-frame ()
+(defun edebug-inline-result--hide-frame ()
   "Hide edebug result child-frame."
-  (if (fboundp 'posframe-hide)
+  (when (featurep 'posframe)
+    (unless (fboundp 'posframe-hide)
       (require 'posframe))
-  (posframe-hide " *edebug-previous-result*"))
+    (posframe-hide " *edebug-previous-result*")))
 
 ;;;###autoload
 (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
 ;;;###autoload
-(advice-add 'top-level :before #'edebug-inline-result-hide-frame)
+(advice-add 'top-level :before #'edebug-inline-result--hide-frame)
 ;;;###autoload
-(add-hook 'focus-out-hook #'edebug-inline-result-hide-frame nil t)
+(add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t)
 ;;;###autoload
 (add-hook 'window-configuration-change-hook #'edebug-inline-result--hide-frame)
 
