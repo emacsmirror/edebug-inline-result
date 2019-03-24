@@ -65,6 +65,8 @@
 (advice-add 'top-level :before #'edebug-inline-result--hide-frame)
 ;;;###autoload
 (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t)
+;;;###autoload
+(advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame)
 
 
 
