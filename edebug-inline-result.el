@@ -28,10 +28,14 @@
 
 ;;; Code:
 
+(defgroup edebug-inline-result nil
+  "edebug-inline-result options."
+  :prefix "edebug-inline-result-"
+  :group 'edebug)
+
 ;;;###autoload
 (defun edebug-inline-result-show ()
   "Show `edebug-previous-result' with specific popup backend."
-  (interactive)
   (cond
    ((featurep 'posframe)
     (posframe-show " *edebug-previous-result*"
@@ -51,7 +55,6 @@
    ((featurep 'pos-tip)
     (pos-tip-show edebug-previous-result 'popup-face))))
 
-;;;###autoload
 (defun edebug-inline-result--hide-frame ()
   "Hide edebug result child-frame."
   (when (featurep 'posframe)
@@ -59,14 +62,40 @@
       (require 'posframe))
     (posframe-hide " *edebug-previous-result*")))
 
+(defun edebug-inline-result-enable ()
+  "Enable `edebug-inline-result-mode'."
+  (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
+  (advice-add 'top-level :before #'edebug-inline-result--hide-frame)
+  (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t)
+  (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame))
+
+(defun edebug-inline-result-disable ()
+  "Disable `edebug-inline-result-mode'."
+  (advice-remove 'edebug-previous-result #'edebug-inline-result-show)
+  (advice-remove 'top-level #'edebug-inline-result--hide-frame)
+  (remove-hook 'focus-out-hook #'edebug-inline-result--hide-frame)
+  (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame))
+
+(defvar edebug-inline-result-mode-map
+  (let ((map (make-sparse-keymap)))
+    map)
+  "edebug-inline-result-mode map.")
+
 ;;;###autoload
-(advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
+(define-minor-mode edebug-inline-result-mode
+  "A minor mode that show Edebug result with inline style."
+  :require 'edbeug-inline-result
+  :init-value t
+  :lighter ""
+  :group 'edebug-inline-result
+  :keymap 'edebug-inline-result-mode-map
+  (if edebug-inline-result-mode
+      (edebug-inline-result-enable)
+    (edebug-inline-result-disable)))
+
 ;;;###autoload
-(advice-add 'top-level :before #'edebug-inline-result--hide-frame)
-;;;###autoload
-(add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t)
-;;;###autoload
-(advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame)
+(define-global-minor-mode global-edebug-inline-result-mode edebug-inline-result-mode
+  edebug-inline-result-mode)
 
 
 
