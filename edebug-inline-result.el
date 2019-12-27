@@ -33,12 +33,16 @@
   :prefix "edebug-inline-result-"
   :group 'edebug)
 
+(defvar edebug-inline-result--buffer-name
+  " *edebug-previous-result*"
+  "The `edebug-inline-result' result buffer name in posframe.")
+
 ;;;###autoload
 (defun edebug-inline-result-show ()
   "Show `edebug-previous-result' with specific popup backend."
   (cond
    ((featurep 'posframe)
-    (posframe-show " *edebug-previous-result*"
+    (posframe-show edebug-inline-result--buffer-name
                    :string (substring-no-properties edebug-previous-result)
                    :position (point)
                    :width (window-width)
@@ -62,7 +66,7 @@
   (when (featurep 'posframe)
     (unless (fboundp 'posframe-hide)
       (require 'posframe))
-    (posframe-hide " *edebug-previous-result*")))
+    (posframe-hide edebug-inline-result--buffer-name)))
 
 (defun edebug-inline-result-enable ()
   "Enable `edebug-inline-result-mode'."
@@ -78,8 +82,8 @@
   (remove-hook 'focus-out-hook #'edebug-inline-result--hide-frame)
   (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame)
   ;; close result popup if not closed.
-  (if (buffer-live-p (get-buffer " *edebug-previous-result*"))
-      (posframe-delete " *edebug-previous-result*")))
+  (if (buffer-live-p (get-buffer edebug-inline-result--buffer-name))
+      (posframe-delete edebug-inline-result--buffer-name)))
 
 (defvar edebug-inline-result-mode-map
   (let ((map (make-sparse-keymap)))
