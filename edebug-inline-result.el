@@ -76,7 +76,10 @@
   (advice-remove 'edebug-previous-result #'edebug-inline-result-show)
   (advice-remove 'top-level #'edebug-inline-result--hide-frame)
   (remove-hook 'focus-out-hook #'edebug-inline-result--hide-frame)
-  (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame))
+  (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame)
+  ;; close result popup if not closed.
+  (if (buffer-live-p (get-buffer " *edebug-previous-result*"))
+      (posframe-delete " *edebug-previous-result*")))
 
 (defvar edebug-inline-result-mode-map
   (let ((map (make-sparse-keymap)))
