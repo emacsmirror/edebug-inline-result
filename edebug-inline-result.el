@@ -55,8 +55,10 @@
    ((featurep 'pos-tip)
     (pos-tip-show edebug-previous-result 'popup-face))))
 
+;;;###autoload
 (defun edebug-inline-result--hide-frame ()
   "Hide edebug result child-frame."
+  (interactive)
   (when (featurep 'posframe)
     (unless (fboundp 'posframe-hide)
       (require 'posframe))
