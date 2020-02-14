@@ -96,16 +96,13 @@
   "A minor mode that show Edebug result with inline style."
   :require 'edbeug-inline-result
   :init-value t
+  :global nil
   :lighter ""
   :group 'edebug-inline-result
   :keymap 'edebug-inline-result-mode-map
   (if edebug-inline-result-mode
       (edebug-inline-result-enable)
     (edebug-inline-result-disable)))
-
-;;;###autoload
-(define-global-minor-mode global-edebug-inline-result-mode edebug-inline-result-mode
-  edebug-inline-result-mode)
 
 
 
