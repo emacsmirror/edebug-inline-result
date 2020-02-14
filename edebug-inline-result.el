@@ -95,7 +95,7 @@
 (define-minor-mode edebug-inline-result-mode
   "A minor mode that show Edebug result with inline style."
   :require 'edbeug-inline-result
-  :init-value t
+  :init-value nil
   :global nil
   :lighter ""
   :group 'edebug-inline-result
