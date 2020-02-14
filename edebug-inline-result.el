@@ -33,6 +33,12 @@
   :prefix "edebug-inline-result-"
   :group 'edebug)
 
+(defcustom edebug-inline-result-backend 'posframe
+  "The popup backend for edebug-inline-result."
+  :type 'symbol
+  :safe #'symbolp
+  :group 'edebug)
+
 (defvar edebug-inline-result--buffer-name
   " *edebug-previous-result*"
   "The `edebug-inline-result' result buffer name in posframe.")
@@ -41,24 +47,24 @@
 (defun edebug-inline-result-show ()
   "Show `edebug-previous-result' with specific popup backend."
   (let ((message-truncate-lines nil))
-    (cond
-     ((featurep 'posframe)
-      (posframe-show edebug-inline-result--buffer-name
-                     :string (substring-no-properties edebug-previous-result)
-                     :position (point)
-                     :width (window-width)
-                     :background-color "DarkCyan"
-                     :foreground-color "white"
-                     :width 50))
-     ((featurep 'popup)
-      (popup-tip edebug-previous-result
-                 :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
-     ((featurep 'quick-peek)
-      (quick-peek-show edebug-previous-result))
-     ((featurep 'inline-docs)
-      (inline-docs edebug-previous-result))
-     ((featurep 'pos-tip)
-      (pos-tip-show edebug-previous-result 'popup-face)))))
+    (pcase edebug-inline-result-backend
+      ('posframe
+       (posframe-show edebug-inline-result--buffer-name
+                      :string (substring-no-properties edebug-previous-result)
+                      :position (point)
+                      :width (window-width)
+                      :background-color "DarkCyan"
+                      :foreground-color "white"
+                      :width 50))
+      ('popup
+       (popup-tip edebug-previous-result
+                  :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
+      ('quick-peek
+       (quick-peek-show edebug-previous-result))
+      ('inline-docs
+       (inline-docs edebug-previous-result))
+      ('pos-tip
+       (pos-tip-show edebug-previous-result 'popup-face)))))
 
 ;;;###autoload
 (defun edebug-inline-result--hide-frame ()
