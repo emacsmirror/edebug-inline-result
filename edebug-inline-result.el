@@ -43,6 +43,15 @@
   " *edebug-previous-result*"
   "The `edebug-inline-result' result buffer name in posframe.")
 
+(defun edebug-inline-result--below-position (&rest args)
+  "A position helper function to return next line of current position."
+  (unwind-protect
+      (let ((current-line-offset (- (point) (line-beginning-position))))
+        (save-excursion
+          (forward-line 0)
+          (forward-char current-line-offset)
+          (point)))))
+
 ;;;###autoload
 (defun edebug-inline-result-show ()
   "Show `edebug-previous-result' with specific popup backend."
@@ -51,7 +60,7 @@
       ('posframe
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
-                      :position (point)
+                      :position (edebug-inline-result--below-position)
                       :width (window-width)
                       :background-color "DarkCyan"
                       :foreground-color "white"
