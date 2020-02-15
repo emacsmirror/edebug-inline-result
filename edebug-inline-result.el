@@ -90,8 +90,23 @@
       (require 'posframe))
     (posframe-hide edebug-inline-result--buffer-name)))
 
+(defun edebug-inline-result--load-popup-backend ()
+  "Load the selected popup backend library."
+  (pcase edebug-inline-result-backend
+    ('posframe
+     (require 'posframe nil t))
+    ('quick-peek
+     (require 'quick-peek nil t))
+    ('inline-docs
+     (require 'inline-docs nil t))
+    ('popup
+     (require 'popup nil t))
+    ('pos-tip
+     (require 'pos-tip nil t))))
+
 (defun edebug-inline-result-enable ()
   "Enable `edebug-inline-result-mode'."
+  (edebug-inline-result--load-popup-backend)
   (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
   (advice-add 'top-level :before #'edebug-inline-result--hide-frame)
   (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t)
