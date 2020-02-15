@@ -74,6 +74,7 @@
        (popup-tip edebug-previous-result
                   :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
       ('quick-peek
+       (quick-peek-hide)
        (quick-peek-show edebug-previous-result))
       ('inline-docs
        (inline-docs edebug-previous-result))
