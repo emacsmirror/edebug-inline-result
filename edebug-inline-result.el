@@ -33,7 +33,7 @@
   :prefix "edebug-inline-result-"
   :group 'edebug)
 
-(defcustom edebug-inline-result-backend 'posframe
+(defcustom edebug-inline-result-backend 'quick-peek
   "The popup backend for edebug-inline-result."
   :type '(choice
           (const :tag "posframe.el"    'posframe)
