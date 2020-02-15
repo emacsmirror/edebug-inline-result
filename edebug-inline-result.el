@@ -35,7 +35,12 @@
 
 (defcustom edebug-inline-result-backend 'posframe
   "The popup backend for edebug-inline-result."
-  :type 'symbol
+  :type '(choice
+          (const :tag "posframe.el"    'posframe)
+          (const :tag "popup.el"       'popup)
+          (const :tag "quick-peek.el"  'quick-peek)
+          (const :tag "inline-docs.el" 'inline-docs)
+          (const :tag "pos-tip.el"     'pos-tip))
   :safe #'symbolp
   :group 'edebug)
 
