@@ -85,10 +85,11 @@
 (defun edebug-inline-result--hide-frame ()
   "Hide edebug result child-frame."
   (interactive)
-  (when (featurep 'posframe)
-    (unless (fboundp 'posframe-hide)
-      (require 'posframe))
-    (posframe-hide edebug-inline-result--buffer-name)))
+  (pcase edebug-inline-result-backend
+    ('posframe
+     (posframe-hide edebug-inline-result--buffer-name))
+    ('quick-peek
+     (quick-peek-hide))))
 
 (defun edebug-inline-result--load-popup-backend ()
   "Load the selected popup backend library."
