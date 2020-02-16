@@ -65,17 +65,17 @@
       ('posframe
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
-                      :position (edebug-inline-result--below-position)
+                      :position (position)
                       :width (window-width)
                       :background-color "DarkCyan"
                       :foreground-color "white"
                       :width 50))
       ('popup
        (popup-tip edebug-previous-result
+                  :point (point)
                   :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
       ('quick-peek
-       (quick-peek-hide)
-       (quick-peek-show edebug-previous-result))
+       (quick-peek-show edebug-previous-result (point)))
       ('inline-docs
        (inline-docs edebug-previous-result))
       ('pos-tip
