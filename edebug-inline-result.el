@@ -108,10 +108,11 @@
 (defun edebug-inline-result-enable ()
   "Enable `edebug-inline-result-mode'."
   (edebug-inline-result--load-popup-backend)
-  (advice-add 'edebug-previous-result :override #'edebug-inline-result-show)
-  (advice-add 'top-level :before #'edebug-inline-result--hide-frame)
-  (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t)
-  (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame))
+  (advice-add 'edebug-previous-result :override #'edebug-inline-result-show) ; use `edebug-inline-result'
+  (advice-add 'top-level :before #'edebug-inline-result--hide-frame) ; advice on [q] quit
+  (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t) ; hide result when switching windows
+  (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame) ; auto hide previous popup when press [n] next.
+  )
 
 (defun edebug-inline-result-disable ()
   "Disable `edebug-inline-result-mode'."
