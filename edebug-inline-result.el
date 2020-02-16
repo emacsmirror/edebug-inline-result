@@ -60,7 +60,7 @@
 ;;;###autoload
 (defun edebug-inline-result-show ()
   "Show `edebug-previous-result' with specific popup backend."
-  (let ((message-truncate-lines nil))
+  (let ((message-truncate-lines t))
     (pcase edebug-inline-result-backend
       ('posframe
        (posframe-show edebug-inline-result--buffer-name
