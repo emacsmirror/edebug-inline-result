@@ -1,0 +1,7 @@
+* Configuration
+
+#+begin_src emacs-lisp
+(use-package edebug-inline-result
+  :quelpa (edebug-inline-result :fetcher github :repo "stardiviner/edebug-inline-result")
+  :config (edebug-inline-result-mode))
+#+end_src
