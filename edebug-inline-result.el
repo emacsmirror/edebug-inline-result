@@ -65,7 +65,7 @@
       ('posframe
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
-                      :position (position)
+                      :position (point)
                       :width (window-width)
                       :background-color "DarkCyan"
                       :foreground-color "white"
