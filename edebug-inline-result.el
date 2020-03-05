@@ -112,7 +112,8 @@
   (advice-add 'top-level :before #'edebug-inline-result--hide-frame) ; advice on [q] quit
   (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t) ; hide result when switching windows
   (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame) ; auto hide previous popup when press [n] next.
-  )
+  (setq edebug-print-level  500)
+  (setq edebug-print-length 500))
 
 (defun edebug-inline-result-disable ()
   "Disable `edebug-inline-result-mode'."
@@ -122,7 +123,9 @@
   (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame)
   ;; close result popup if not closed.
   (if (buffer-live-p (get-buffer edebug-inline-result--buffer-name))
-      (posframe-delete edebug-inline-result--buffer-name)))
+      (posframe-delete edebug-inline-result--buffer-name))
+  (setq edebug-print-level  (default-value 'edebug-print-level))
+  (setq edebug-print-length (default-value 'edebug-print-length)))
 
 (defvar edebug-inline-result-mode-map
   (let ((map (make-sparse-keymap)))
