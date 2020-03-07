@@ -1,3 +1,11 @@
+* Screenshot
+
+[[file:screenshot.png]]
+
+* Intro
+
+Display edebug every step value result in popup.
+
 * Configuration
 
 #+begin_src emacs-lisp
