@@ -67,8 +67,12 @@
                       :string (substring-no-properties edebug-previous-result)
                       :position (point)
                       :width (window-width)
-                      :background-color "DarkCyan"
-                      :foreground-color "white"
+                      :background-color
+                      (if (eq (alist-get 'background-mode (frame-parameters)) 'dark)
+                          "DarkCyan" "yellow")
+                      :foreground-color
+                      (if (eq (alist-get 'background-mode (frame-parameters)) 'dark)
+                          "light gray" "black")
                       :width 50))
       ('popup
        (popup-tip edebug-previous-result
