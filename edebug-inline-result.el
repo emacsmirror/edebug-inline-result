@@ -73,7 +73,7 @@
                       :foreground-color
                       (if (eq (alist-get 'background-mode (frame-parameters)) 'dark)
                           "light gray" "black")
-                      :width 50))
+                      :internal-border-width 1))
       ('popup
        (popup-tip edebug-previous-result
                   :point (point)
