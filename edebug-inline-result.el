@@ -4,7 +4,7 @@
 ;; Package-Requires: ((emacs "25") (cl-lib "0.5"))
 ;; Package-Version: 0.1
 ;; Keywords: edebug inline
-;; homepage: https://www.github.com/stardivin
+;; homepage: https://www.github.com/stardiviner/edebug-inline-result
 
 ;; edebug-inline-result is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
