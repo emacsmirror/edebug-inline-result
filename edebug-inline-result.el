@@ -64,6 +64,7 @@ Optional argument POSITION ."
   (let ((message-truncate-lines t))
     (pcase edebug-inline-result-backend
       ('posframe
+       (require 'posframe nil t)
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
                       :position (or position (point))
@@ -76,14 +77,18 @@ Optional argument POSITION ."
                           "light gray" "black")
                       :internal-border-width 1))
       ('popup
+       (require 'popup nil t)
        (popup-tip edebug-previous-result
                   :point (point)
                   :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
       ('quick-peek
+       (require 'quick-peek nil t)
        (quick-peek-show edebug-previous-result (point)))
       ('inline-docs
+       (require 'inline-docs nil t)
        (inline-docs edebug-previous-result))
       ('pos-tip
+       (require 'pos-tip nil t)
        (pos-tip-show edebug-previous-result 'popup-face)))))
 
 (defun edebug-inline-result--hide-frame ()
@@ -95,23 +100,8 @@ Optional argument POSITION ."
     ('quick-peek
      (quick-peek-hide))))
 
-(defun edebug-inline-result--load-popup-backend ()
-  "Load the selected popup backend library."
-  (pcase edebug-inline-result-backend
-    ('posframe
-     (require 'posframe nil t))
-    ('quick-peek
-     (require 'quick-peek nil t))
-    ('inline-docs
-     (require 'inline-docs nil t))
-    ('popup
-     (require 'popup nil t))
-    ('pos-tip
-     (require 'pos-tip nil t))))
-
 (defun edebug-inline-result-enable ()
   "Enable function `edebug-inline-result-mode'."
-  (edebug-inline-result--load-popup-backend)
   (advice-add 'edebug-previous-result :after #'edebug-inline-result-show)
   ;; (advice-add 'edebug-step-mode :after #'edebug-inline-result-show)
   ;; (advice-add 'edebug-next-mode :after #'edebug-inline-result-show)
