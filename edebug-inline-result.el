@@ -1,7 +1,7 @@
-;;; edebug-inline-result.el --- show Edebug result inline.
+;;; edebug-inline-result.el --- Show Edebug result inline
 
 ;; Authors: stardiviner <numbchild@gmail.com>
-;; Package-Requires: ((emacs "25") (cl-lib "0.5"))
+;; Package-Requires: ((emacs "25.1"))
 ;; Version: 0.1
 ;; Keywords: extensions lisp tools
 ;; homepage: https://www.github.com/stardiviner/edebug-inline-result
@@ -21,6 +21,9 @@
 ;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+
+;;;; Usage:
+;;;; [M-x edebug-inline-result-mode]
 
 ;;; Code:
 
@@ -54,7 +57,6 @@ Optional argument ARGS ."
           (forward-char current-line-offset)
           (point)))))
 
-;;;###autoload
 (defun edebug-inline-result-show (&optional position)
   "Show variable `edebug-previous-result' with specific popup backend.
 Optional argument POSITION ."
@@ -84,7 +86,6 @@ Optional argument POSITION ."
       ('pos-tip
        (pos-tip-show edebug-previous-result 'popup-face)))))
 
-;;;###autoload
 (defun edebug-inline-result--hide-frame ()
   "Hide edebug result child-frame."
   (interactive)
