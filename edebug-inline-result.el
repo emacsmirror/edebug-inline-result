@@ -58,14 +58,15 @@
           (point)))))
 
 ;;;###autoload
-(defun edebug-inline-result-show ()
+(defun edebug-inline-result-show (&optional position)
   "Show `edebug-previous-result' with specific popup backend."
+  (interactive)
   (let ((message-truncate-lines t))
     (pcase edebug-inline-result-backend
       ('posframe
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
-                      :position (point)
+                      :position (or position (point))
                       :width (window-width)
                       :background-color
                       (if (eq (alist-get 'background-mode (frame-parameters)) 'dark)
