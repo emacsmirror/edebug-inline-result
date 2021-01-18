@@ -47,7 +47,7 @@
   " *edebug-previous-result*"
   "The `edebug-inline-result' result buffer name in posframe.")
 
-(defun edebug-inline-result--below-position (&optional args)
+(defun edebug-inline-result--below-position ()
   "A position helper function to return next line of current position.
 Optional argument ARGS ."
   (unwind-protect
@@ -106,8 +106,10 @@ Optional argument POSITION ."
   ;; (advice-add 'edebug-step-mode :after #'edebug-inline-result-show)
   ;; (advice-add 'edebug-next-mode :after #'edebug-inline-result-show)
   (advice-add 'top-level :before #'edebug-inline-result--hide-frame) ; advice on [q] quit
-  (add-hook 'focus-out-hook #'edebug-inline-result--hide-frame nil t) ; hide result when switching windows
-  (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame) ; auto hide previous popup when press [n] next.
+  ;; hide result when switching windows
+  (add-function :after 'after-focus-change-function #'edebug-inline-result--hide-frame)
+  ;; auto hide previous popup when press [n] next.
+  (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame)
   (setq edebug-print-level  500)
   (setq edebug-print-length 500))
 
@@ -116,7 +118,7 @@ Optional argument POSITION ."
   (advice-remove 'edebug-previous-result #'edebug-inline-result-show)
   ;; (advice-remove 'edebug-next-mode #'edebug-inline-result-show)
   (advice-remove 'top-level #'edebug-inline-result--hide-frame)
-  (remove-hook 'focus-out-hook #'edebug-inline-result--hide-frame)
+  (remove-function 'focus-out-hook #'edebug-inline-result--hide-frame)
   (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame)
   ;; close result popup if not closed.
   (if (buffer-live-p (get-buffer edebug-inline-result--buffer-name))
