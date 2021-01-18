@@ -44,8 +44,9 @@
   " *edebug-previous-result*"
   "The `edebug-inline-result' result buffer name in posframe.")
 
-(defun edebug-inline-result--below-position (&rest args)
-  "A position helper function to return next line of current position."
+(defun edebug-inline-result--below-position (&optional args)
+  "A position helper function to return next line of current position.
+Optional argument ARGS ."
   (unwind-protect
       (let ((current-line-offset (- (point) (line-beginning-position))))
         (save-excursion
@@ -55,7 +56,8 @@
 
 ;;;###autoload
 (defun edebug-inline-result-show (&optional position)
-  "Show `edebug-previous-result' with specific popup backend."
+  "Show variable `edebug-previous-result' with specific popup backend.
+Optional argument POSITION ."
   (interactive)
   (let ((message-truncate-lines t))
     (pcase edebug-inline-result-backend
@@ -107,7 +109,7 @@
      (require 'pos-tip nil t))))
 
 (defun edebug-inline-result-enable ()
-  "Enable `edebug-inline-result-mode'."
+  "Enable function `edebug-inline-result-mode'."
   (edebug-inline-result--load-popup-backend)
   (advice-add 'edebug-previous-result :after #'edebug-inline-result-show)
   ;; (advice-add 'edebug-step-mode :after #'edebug-inline-result-show)
@@ -119,7 +121,7 @@
   (setq edebug-print-length 500))
 
 (defun edebug-inline-result-disable ()
-  "Disable `edebug-inline-result-mode'."
+  "Disable variable `edebug-inline-result-mode'."
   (advice-remove 'edebug-previous-result #'edebug-inline-result-show)
   ;; (advice-remove 'edebug-next-mode #'edebug-inline-result-show)
   (advice-remove 'top-level #'edebug-inline-result--hide-frame)
@@ -134,7 +136,7 @@
 (defvar edebug-inline-result-mode-map
   (let ((map (make-sparse-keymap)))
     map)
-  "edebug-inline-result-mode map.")
+  "Edebug-inline-result-mode map.")
 
 ;;;###autoload
 (define-minor-mode edebug-inline-result-mode
