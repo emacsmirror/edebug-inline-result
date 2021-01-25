@@ -22,8 +22,8 @@
 
 ;;; Commentary:
 
-;;;; Usage:
-;;;; [M-x edebug-inline-result-mode]
+;; Usage:
+;; [M-x edebug-inline-result-mode]
 
 ;;; Code:
 
