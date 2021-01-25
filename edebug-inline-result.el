@@ -1,4 +1,4 @@
-;;; edebug-inline-result.el --- Show Edebug result inline
+;;; edebug-inline-result.el --- Show Edebug result inline -*- lexical-binding: t; -*-
 
 ;; Authors: stardiviner <numbchild@gmail.com>
 ;; Package-Requires: ((emacs "25.1"))
