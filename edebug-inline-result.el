@@ -52,7 +52,7 @@
   (unwind-protect
       (let ((current-line-offset (- (point) (line-beginning-position))))
         (save-excursion
-          (forward-line 0)
+          (forward-line 1)
           (forward-char current-line-offset)
           (point)))))
 
