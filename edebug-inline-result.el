@@ -48,8 +48,7 @@
   "The `edebug-inline-result' result buffer name in posframe.")
 
 (defun edebug-inline-result--below-position ()
-  "A position helper function to return next line of current position.
-Optional argument ARGS ."
+  "A position helper function to return next line of current position."
   (unwind-protect
       (let ((current-line-offset (- (point) (line-beginning-position))))
         (save-excursion
