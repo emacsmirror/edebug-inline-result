@@ -43,18 +43,26 @@
   :safe #'symbolp
   :group 'edebug)
 
+(defcustom edebug-inline-result-display-below t
+  "Display inline result below current line."
+  :type 'boolean
+  :safe #'booleanp)
+
 (defvar edebug-inline-result--buffer-name
   " *edebug-previous-result*"
   "The `edebug-inline-result' result buffer name in posframe.")
 
-(defun edebug-inline-result--below-position ()
-  "A position helper function to return next line of current position."
-  (unwind-protect
-      (let ((current-line-offset (- (point) (line-beginning-position))))
-        (save-excursion
-          (forward-line 1)
-          (forward-char current-line-offset)
-          (point)))))
+(defun edebug-inline-result--position (&optional position)
+  "A helper function to return the POSITION to display inline result."
+  (if edebug-inline-result-display-below
+      ;; return next line of current position.
+      (unwind-protect
+          (let ((current-line-offset (- (point) (line-beginning-position))))
+            (save-excursion
+              (forward-line 1)
+              (forward-char current-line-offset)
+              (point))))
+    (or position (point))))
 
 (defun edebug-inline-result-show (&optional position)
   "Show variable `edebug-previous-result' with specific popup backend.
@@ -66,7 +74,7 @@ Optional argument POSITION ."
        (require 'posframe nil t)
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
-                      :position (or position (point))
+                      :position (edebug-inline-result--position position)
                       :width (window-width)
                       :background-color
                       (if (eq (alist-get 'background-mode (frame-parameters)) 'dark)
@@ -78,11 +86,11 @@ Optional argument POSITION ."
       ('popup
        (require 'popup nil t)
        (popup-tip edebug-previous-result
-                  :point (point)
+                  :point (edebug-inline-result--position position)
                   :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
       ('quick-peek
        (require 'quick-peek nil t)
-       (quick-peek-show edebug-previous-result (point)))
+       (quick-peek-show edebug-previous-result (edebug-inline-result--position position)))
       ('inline-docs
        (require 'inline-docs nil t)
        (inline-docs edebug-previous-result))
