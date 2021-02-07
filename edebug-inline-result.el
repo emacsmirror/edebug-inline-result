@@ -118,7 +118,7 @@ Optional argument POSITION ."
   ;; (advice-add 'edebug-next-mode :after #'edebug-inline-result-show)
   (advice-add 'top-level :before #'edebug-inline-result--hide-frame) ; advice on [q] quit
   ;; hide result when switching windows
-  (add-function :after 'after-focus-change-function #'edebug-inline-result--hide-frame)
+  (add-function :after after-focus-change-function #'edebug-inline-result--hide-frame)
   ;; auto hide previous popup when press [n] next.
   (advice-add 'edebug-next-mode :before #'edebug-inline-result--hide-frame)
   (setq edebug-print-level  500)
@@ -129,7 +129,7 @@ Optional argument POSITION ."
   (advice-remove 'edebug-previous-result #'edebug-inline-result-show)
   ;; (advice-remove 'edebug-next-mode #'edebug-inline-result-show)
   (advice-remove 'top-level #'edebug-inline-result--hide-frame)
-  (remove-function 'focus-out-hook #'edebug-inline-result--hide-frame)
+  (remove-function focus-out-hook #'edebug-inline-result--hide-frame)
   (advice-remove 'edebug-next-mode #'edebug-inline-result--hide-frame)
   ;; close result popup if not closed.
   (if (buffer-live-p (get-buffer edebug-inline-result--buffer-name))
