@@ -27,6 +27,15 @@
 
 ;;; Code:
 
+(require 'edebug)
+
+(declare-function 'posframe-show "ext:posframe.el" t t)
+(declare-function 'popup-tip "ext:popup.el")
+(declare-function 'quick-peek-show "ext:quick-peek.el")
+(declare-function 'inline-docs "ext:inline-docs.el")
+(declare-function 'pos-tip-show "ext:pos-tip.el" t t)
+
+
 (defgroup edebug-inline-result nil
   "edebug-inline-result options."
   :prefix "edebug-inline-result-"
@@ -71,7 +80,6 @@ Optional argument POSITION ."
   (let ((message-truncate-lines t))
     (pcase edebug-inline-result-backend
       ('posframe
-       (require 'posframe nil t)
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
                       :position (edebug-inline-result--position position)
@@ -84,18 +92,14 @@ Optional argument POSITION ."
                           "light gray" "black")
                       :internal-border-width 1))
       ('popup
-       (require 'popup nil t)
        (popup-tip edebug-previous-result
                   :point (edebug-inline-result--position position)
                   :truncate t :height 20 :width 45 :nostrip t :margin 1 :nowait nil))
       ('quick-peek
-       (require 'quick-peek nil t)
        (quick-peek-show edebug-previous-result (edebug-inline-result--position position)))
       ('inline-docs
-       (require 'inline-docs nil t)
        (inline-docs edebug-previous-result))
       ('pos-tip
-       (require 'pos-tip nil t)
        (pos-tip-show edebug-previous-result 'popup-face)))))
 
 (defun edebug-inline-result--hide-frame ()
