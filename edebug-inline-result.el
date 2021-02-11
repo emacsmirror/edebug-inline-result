@@ -30,8 +30,11 @@
 (require 'edebug)
 
 (declare-function posframe-show "ext:posframe.el" t t)
+(declare-function posframe-hide "ext:posframe.el" t t)
+(declare-function posframe-delete "ext:posframe.el" t t)
 (declare-function popup-tip "ext:popup.el")
 (declare-function quick-peek-show "ext:quick-peek.el")
+(declare-function quick-peek-hide "ext:quick-peek.el")
 (declare-function inline-docs "ext:inline-docs.el")
 (declare-function pos-tip-show "ext:pos-tip.el" t t)
 
