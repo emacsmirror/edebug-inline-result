@@ -53,7 +53,7 @@
           (const :tag "inline-docs.el" inline-docs)
           (const :tag "pos-tip.el"     pos-tip))
   :safe #'symbolp
-  :group 'edebug)
+  :group 'edebug-inline-result)
 
 (defcustom edebug-inline-result-display-below t
   "Display inline result below current line."
