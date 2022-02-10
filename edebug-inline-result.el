@@ -4,7 +4,7 @@
 ;; Package-Requires: ((emacs "25.1"))
 ;; Version: 0.1
 ;; Keywords: extensions lisp tools
-;; homepage: https://www.github.com/stardiviner/edebug-inline-result
+;; homepage: https://repo.or.cz/edebug-inline-result.git
 
 ;; edebug-inline-result is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
