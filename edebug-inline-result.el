@@ -86,7 +86,8 @@ Optional argument POSITION ."
        (posframe-show edebug-inline-result--buffer-name
                       :string (substring-no-properties edebug-previous-result)
                       :position (edebug-inline-result--position position)
-                      :width (window-width)
+                      :max-height (/ (window-height) 5) ; (/ (frame-height) 10)
+                      :max-width (window-width) ; (frame-width)
                       :background-color
                       (if (eq (alist-get 'background-mode (frame-parameters)) 'dark)
                           "DarkCyan" "yellow")
